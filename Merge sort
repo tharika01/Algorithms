@@ -1,0 +1,55 @@
+#include <stdio.h>
+void merge_sort(int A[], int low, int high);
+void merge(int A[],int low,int mid,int high);
+int main()
+{
+    int A[25],n,i;
+    printf("Enter the num of elements in the array\n");
+    scanf("%d",&n);
+    printf("Enter hte elements of the array\n");
+    for(i = 0;i < n;i++)
+        scanf("%d",&A[i]);
+    merge_sort(A,0, n-1);//low=0,high=n-1;
+    printf("The sorted array is \n");
+    for(i = 0;i <= high;i++)    
+        printf("%d ",A[i]);
+    return 0;
+}
+void merge_sort(int A[], int low, int high)
+{
+    int mid;
+    if(low < high)
+    {
+            mid = (low+high)/2;
+            merge_sort(A,low,mid);
+            merge_sort(A,mid+1,high);
+            merge(A,low,mid,high);
+    }
+    return;
+}
+void merge(int A[],int low,int mid,int high)
+{
+    int h = low,i = low,j = mid+1,B[1000],k;
+    //printf("%d",high);
+    while((h <= mid) && (j <=high))
+    {
+        if(A[h] <= A[j])
+            B[i] = A[h++];
+        else
+            B[i] = A[j++];
+        i++;
+    }
+    if(h >mid)
+    {
+        for(k = j;k<=high;k++)//first array exhausted
+            B[i++] = A[k];
+    }
+    else
+    {
+        for(k = h;k <= mid;k++)//second array exhausted
+            B[i++] = A[k];
+    }
+    for(k = 0; k <= high;k++)
+        A[k] = B[k];
+    return;
+}
